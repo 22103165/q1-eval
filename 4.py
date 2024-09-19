@@ -1,50 +1,35 @@
-class ShoppingList:
-    def __init__(self):
-        self.items = []
+import numpy as np
+import matplotlib.pyplot as plt rainfall_data = {
+'City X': np.array([100, 120, 85, 90, 110, 95]), 'City Y': np.array([80, 75, 60, 95, 85, 90]),
+'City Z': np.array([150, 140, 135, 160, 155, 170])
+}
+for city, data in rainfall_data.items():
+total_rainfall = np.sum(data)
+average_rainfall = np.mean(data)
+print(f"{city}: Total Rainfall = {total_rainfall} mm, Average Monthly Rainfall =
+{average_rainfall:.2f} mm")
+def monthly_average(rainfall_data):
+monthly_avg = np.mean(np.array(list(rainfall_data.values())), axis=0)
+return monthly_avg
+monthly_avg_rainfall = monthly_average(rainfall_data) print("\nMonthly Average Rainfall (across all cities):")
+for month, avg in enumerate(monthly_avg_rainfall, start=1):
+print(f"Month {month}: {avg:.2f} mm") months = np.arange(1, 7)
+plt.figure(figsize=(10, 6))
+for city, data in rainfall_data.items():
+plt.plot(months, data, marker='o', label=city)
+plt.title('Monthly Rainfall Trends in Three Cities') plt.xlabel('Month')
+plt.ylabel('Rainfall (mm)')
+plt.xticks(months)
+plt.legend()
+plt.grid()
+plt.tight_layout()
+plt.show()
+rainfall_range = {city: np.max(data) - np.min(data) for city, data in rainfall_data.items()} print("\nRainfall Range for Each City:")
+for city, r_range in rainfall_range.items(): print(f"{city}: Range = {r_range} mm")
+plt.figure(figsize=(10, 6))
+plt.bar(rainfall_range.keys(), rainfall_range.values(), color=['blue', 'orange', 'green']) plt.title('Range of Rainfall for Each City (6 Months)')
+plt.xlabel('City')
+plt.ylabel('Rainfall Range (mm)')
+plt.grid(axis='y')
 
-    def add_item(self, item: str):
-        if item not in self.items:
-            self.items.append(item)
-            print(f"Item '{item}' added to the list.")
-        else:
-            print(f"Item '{item}' is already in the list.")
-
-    def remove_item(self, item: str):
-        if item in self.items:
-            self.items.remove(item)
-            print(f"Item '{item}' removed from the list.")
-        else:
-            print(f"Item '{item}' not found in the list.")
-
-    def search_item(self, item: str) -> bool:
-        return item in self.items
-
-    def display_list(self):
-        if not self.items:
-            print("The shopping list is currently empty.")
-        else:
-            print("Current shopping list:")
-            for item in self.items:
-                print(f"- {item}")
-
-
-if __name__ == "__main__":
-    shopping_list = ShoppingList()
-
-    
-    shopping_list.add_item("Milk")
-    shopping_list.add_item("Eggs")
-    shopping_list.add_item("Bread")
-
-    
-    shopping_list.display_list()
-
-    
-    item_to_search = "Eggs"
-    if shopping_list.search_item(item_to_search):
-        print(f"Item '{item_to_search}' is on the list.")
-    else:
-        print(f"Item '{item_to_search}' is not on the list.")
-    shopping_list.remove_item("Bread")
-    shopping_list.remove_item("Butter") 
-    shopping_list.display_list()
+ plt.tight_layout() plt.show()
